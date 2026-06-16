@@ -54,7 +54,7 @@ async function fetchJobs() {
     arbeitJobs.forEach((job) => {
       const titleLower = job.title.toLowerCase();
       const locLower = job.location.toLowerCase();
-      const isHR = titleLower.includes('hr') || titleLower.includes('human') || titleLower.includes('people');
+      const isHR = titleLower.includes('hr') || titleLower.includes('human') || titleLower.includes('people') || titleLower.includes('founder') || titleLower.includes('chief of staff');
       
       if (isHR) {
         let isMatch = false;
@@ -85,6 +85,8 @@ async function fetchJobs() {
   // Add some fallback mock jobs to guarantee applications for demo
   jobs.push({ id: `mock_tcs_india`, title: 'HR Generalist Intern', company: 'Tata Consultancy Services', applyUrl: 'https://example.com/apply/india1', priority: 4 });
   jobs.push({ id: `mock_wipro_india`, title: 'People Operations Intern', company: 'Wipro', applyUrl: 'https://example.com/apply/india2', priority: 4 });
+  jobs.push({ id: `mock_zepto_founder`, title: 'Founder\'s Office Intern', company: 'Zepto', applyUrl: 'https://example.com/apply/zepto', priority: 5 });
+  jobs.push({ id: `mock_cred_founder`, title: 'Founder\'s Office Intern', company: 'CRED', applyUrl: 'https://example.com/apply/cred', priority: 5 });
   
   return jobs;
 }
