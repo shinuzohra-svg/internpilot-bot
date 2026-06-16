@@ -86,7 +86,7 @@ export default function TrackerPage() {
                     
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.75rem' }}>
                       <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>
-                        {new Date(app.applied_at + 'Z').toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })}
+                        {new Date(app.applied_at.replace(' ', 'T') + 'Z').toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })}
                       </span>
                       
                       <select 

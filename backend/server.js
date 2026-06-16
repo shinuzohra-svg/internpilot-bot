@@ -57,26 +57,22 @@ async function fetchJobs() {
       const isHR = titleLower.includes('hr') || titleLower.includes('human') || titleLower.includes('people');
       
       if (isHR) {
-        let priority = 0;
+        let isMatch = false;
         
         // 1st: Remote based in India
-        if (locLower.includes('remote') && locLower.includes('india')) priority = 5;
+        if (locLower.includes('remote') && locLower.includes('india')) isMatch = true;
         // 2nd: Roles in Delhi
-        else if (locLower.includes('delhi') || locLower.includes('new delhi')) priority = 4;
-        // 3rd: Other remote roles
-        else if (locLower.includes('remote')) priority = 3;
-        // 4th: Gulf regions
-        else if (locLower.includes('dubai') || locLower.includes('uae') || locLower.includes('gulf') || locLower.includes('middle east')) priority = 2;
-        // 5th: US/UK
-        else if (locLower.includes('us ') || locLower.includes('united states') || locLower.includes('uk') || locLower.includes('united kingdom')) priority = 1;
-
-        jobs.push({
-          id: `arbeit_${job.slug}`,
-          title: job.title,
-          company: job.company_name,
-          applyUrl: job.url,
-          priority
-        });
+        else if (locLower.includes('delhi') || locLower.includes('new delhi')) isMatch = true;
+        
+        if (isMatch) {
+          jobs.push({
+            id: `arbeit_${job.slug}`,
+            title: job.title,
+            company: job.company_name,
+            applyUrl: job.url,
+            priority: 5
+          });
+        }
       }
     });
     
@@ -89,7 +85,6 @@ async function fetchJobs() {
   // Add some fallback mock jobs to guarantee applications for demo
   jobs.push({ id: `mock_tcs_india`, title: 'HR Generalist Intern', company: 'Tata Consultancy Services', applyUrl: 'https://example.com/apply/india1', priority: 4 });
   jobs.push({ id: `mock_wipro_india`, title: 'People Operations Intern', company: 'Wipro', applyUrl: 'https://example.com/apply/india2', priority: 4 });
-  jobs.push({ id: `mock_deloitte_us`, title: 'Human Capital Analyst', company: 'Deloitte', applyUrl: 'https://example.com/apply/us1', priority: 1 });
   
   return jobs;
 }
