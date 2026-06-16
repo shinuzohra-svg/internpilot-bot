@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy root package.json and install frontend dependencies
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --include=dev
 
 # Copy backend package.json and install backend dependencies
 COPY backend/package.json backend/package-lock.json ./backend/
