@@ -79,7 +79,39 @@ async function fetchJobs() {
     // Sort jobs by priority descending so Indian roles are processed first
     jobs.sort((a, b) => b.priority - a.priority);
   } catch (e) {
-    addLog(`Error fetching jobs: ${e.message}`);
+  try {
+    const browser = await chromium.launch({ headless: true });
+    const page = await browser.newPage();
+    
+    // Scrape Internshala for Work From Home HR Roles
+    await page.goto('https://internshala.com/internships/work-from-home-human-resources-hr-internships/', { waitUntil: 'domcontentloaded', timeout: 15000 });
+    await page.waitForSelector('.internship_meta', { timeout: 10000 });
+    
+    const internshalaJobs = await page.$$eval('.individual_internship', elements => {
+      return elements.slice(0, 5).map(el => {
+        const titleEl = el.querySelector('.job-title-href');
+        const companyEl = el.querySelector('.company-name');
+        return {
+          title: titleEl ? titleEl.innerText.trim() : 'Unknown',
+          company: companyEl ? companyEl.innerText.trim() : 'Unknown',
+          url: titleEl ? 'https://internshala.com' + titleEl.getAttribute('href') : ''
+        };
+      });
+    });
+
+    internshalaJobs.forEach((job) => {
+      jobs.push({
+        id: `internshala_${job.company.replace(/\s+/g, '')}_${Date.now()}`,
+        title: job.title,
+        company: job.company,
+        applyUrl: job.url,
+        priority: 5 // Remote India
+      });
+    });
+
+    await browser.close();
+  } catch (e) {
+    addLog(`Error scraping Internshala: ${e.message}`);
   }
   
   // Add some fallback mock jobs to guarantee applications for demo
