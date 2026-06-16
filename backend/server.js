@@ -87,9 +87,9 @@ async function fetchJobs() {
   }
   
   // Add some fallback mock jobs to guarantee applications for demo
-  jobs.push({ id: `mock_${Date.now()}`, title: 'HR Generalist Intern', company: 'Tata Consultancy Services', applyUrl: 'https://example.com/apply/india1', priority: 4 });
-  jobs.push({ id: `mock_${Date.now()+1}`, title: 'People Operations Intern', company: 'Wipro', applyUrl: 'https://example.com/apply/india2', priority: 4 });
-  jobs.push({ id: `mock_${Date.now()+2}`, title: 'Human Capital Analyst', company: 'Deloitte', applyUrl: 'https://example.com/apply/us1', priority: 1 });
+  jobs.push({ id: `mock_tcs_india`, title: 'HR Generalist Intern', company: 'Tata Consultancy Services', applyUrl: 'https://example.com/apply/india1', priority: 4 });
+  jobs.push({ id: `mock_wipro_india`, title: 'People Operations Intern', company: 'Wipro', applyUrl: 'https://example.com/apply/india2', priority: 4 });
+  jobs.push({ id: `mock_deloitte_us`, title: 'Human Capital Analyst', company: 'Deloitte', applyUrl: 'https://example.com/apply/us1', priority: 1 });
   
   return jobs;
 }
