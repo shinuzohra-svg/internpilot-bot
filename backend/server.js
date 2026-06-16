@@ -41,9 +41,9 @@ let autoApplyTask = null;
 
 // The base elite profile
 const eliteProfile = {
-  name: 'Md Ziyan',
-  email: 'mdziyan@example.com',
-  phone: '9876543210'
+  name: 'Md Ziyan Ansari',
+  email: 'ansariziyan456@gmail.com',
+  phone: '+91 97700 29011'
 };
 
 async function fetchJobs() {
