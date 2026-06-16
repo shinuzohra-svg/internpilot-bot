@@ -1,5 +1,5 @@
 # Use the official Playwright image which includes Node.js and Chromium dependencies
-FROM mcr.microsoft.com/playwright:v1.61.0-jammy
+FROM mcr.microsoft.com/playwright:v1.61.0-noble
 
 # Set the working directory
 WORKDIR /app
