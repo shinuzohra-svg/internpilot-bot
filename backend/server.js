@@ -51,23 +51,45 @@ async function fetchJobs() {
   try {
     const arbeitResp = await axios.get('https://www.arbeitnow.com/api/job-board-api');
     const arbeitJobs = arbeitResp.data.data;
-    arbeitJobs.forEach((job, index) => {
-      if (job.title.toLowerCase().includes('hr') || job.title.toLowerCase().includes('human') || job.title.toLowerCase().includes('people')) {
+    arbeitJobs.forEach((job) => {
+      const titleLower = job.title.toLowerCase();
+      const locLower = job.location.toLowerCase();
+      const isHR = titleLower.includes('hr') || titleLower.includes('human') || titleLower.includes('people');
+      
+      if (isHR) {
+        let priority = 0;
+        
+        // 1st: Remote based in India
+        if (locLower.includes('remote') && locLower.includes('india')) priority = 5;
+        // 2nd: Roles in Delhi
+        else if (locLower.includes('delhi') || locLower.includes('new delhi')) priority = 4;
+        // 3rd: Other remote roles
+        else if (locLower.includes('remote')) priority = 3;
+        // 4th: Gulf regions
+        else if (locLower.includes('dubai') || locLower.includes('uae') || locLower.includes('gulf') || locLower.includes('middle east')) priority = 2;
+        // 5th: US/UK
+        else if (locLower.includes('us ') || locLower.includes('united states') || locLower.includes('uk') || locLower.includes('united kingdom')) priority = 1;
+
         jobs.push({
           id: `arbeit_${job.slug}`,
           title: job.title,
           company: job.company_name,
-          applyUrl: job.url
+          applyUrl: job.url,
+          priority
         });
       }
     });
+    
+    // Sort jobs by priority descending so Indian roles are processed first
+    jobs.sort((a, b) => b.priority - a.priority);
   } catch (e) {
     addLog(`Error fetching jobs: ${e.message}`);
   }
   
-  // Add some fallback mock jobs to guarantee applications
-  jobs.push({ id: `mock_${Date.now()}`, title: 'Human Capital Analyst', company: 'Deloitte', applyUrl: 'https://example.com/apply/1' });
-  jobs.push({ id: `mock_${Date.now()+1}`, title: 'HR Consultant', company: 'PwC', applyUrl: 'https://example.com/apply/2' });
+  // Add some fallback mock jobs to guarantee applications for demo
+  jobs.push({ id: `mock_${Date.now()}`, title: 'HR Generalist Intern', company: 'Tata Consultancy Services', applyUrl: 'https://example.com/apply/india1', priority: 4 });
+  jobs.push({ id: `mock_${Date.now()+1}`, title: 'People Operations Intern', company: 'Wipro', applyUrl: 'https://example.com/apply/india2', priority: 4 });
+  jobs.push({ id: `mock_${Date.now()+2}`, title: 'Human Capital Analyst', company: 'Deloitte', applyUrl: 'https://example.com/apply/us1', priority: 1 });
   
   return jobs;
 }

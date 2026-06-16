@@ -126,8 +126,8 @@ export default function ResumePage() {
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     <Input label="Full Name" value={profile.name} />
                     <Input label="Target Title" value={profile.title} />
-                    <Input label="Email" value={profile.email} />
-                    <Input label="Phone" value={profile.phone} />
+                    <Input label="Email" value={profile.contact?.email || ''} />
+                    <Input label="Phone" value={profile.contact?.phone || ''} />
                   </div>
                 </Section>
                 
@@ -221,9 +221,9 @@ export default function ResumePage() {
                 <h1 style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#1e293b' }}>{profile.name}</h1>
                 <h2 style={{ fontSize: '1.1rem', color: '#3b82f6', margin: '0.25rem 0 0.5rem 0' }}>{profile.title}</h2>
                 <div style={{ fontSize: '0.85rem', color: '#64748b', display: 'flex', gap: '1rem' }}>
-                  <span>{profile.location}</span>
-                  <span>{profile.phone}</span>
-                  <span>{profile.email}</span>
+                  <span>{profile.contact?.location}</span>
+                  <span>{profile.contact?.phone}</span>
+                  <span>{profile.contact?.email}</span>
                 </div>
               </header>
               
